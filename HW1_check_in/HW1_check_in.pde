@@ -31,8 +31,7 @@ void computePhysics(float dt){
   position_y = position_y + dt * velocity_y;
   velocity_y = velocity_y + dt * acceleration;
   
-  float position_y_nxt = position_y + dt * velocity_y;
-  if ( position_y_nxt + radius > floor){
+  if ( position_y + radius > floor){
     position_y = floor - radius;
     velocity_y = -1 * coeff * velocity_y; 
   }
@@ -45,14 +44,6 @@ void computePhysics(float dt){
     position_x = wall_x1 + radius;
     velocity_x = -1 * velocity_x; 
   }
-}
-
-void drawWall(float x, float y, float z, float w, float h){
-  pushMatrix();
-  translate(x,y,z);
-  fill(230,100,70);
-  rect(0,0, w, h);
-  popMatrix();
 }
 
 void drawBox(float x, float y, float z, float w, float h, float d){
@@ -116,7 +107,8 @@ void drawScene(){
   lights();
   drawLight();
 
-  drawBox(100, 50, 0, width-200, height-100, 600);
+  drawBox(wall_x1, wall_y1, wall_z1,
+          (wall_x2 - wall_x1), (wall_y2 - wall_y1), (wall_z2 - wall_z1));
   
   drawBall(position_y);
 }
@@ -136,5 +128,4 @@ void draw(){
         " FPS: "+ str(round(frameRate)) +"\n";
         
   surface.setTitle(projectTitle+ "  -  " +runtimeReport);
-  //print(runtimeReport);
 }
