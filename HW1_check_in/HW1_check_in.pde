@@ -24,7 +24,7 @@ void setup(){
 
 void computePhysics(float dt){
   float acceleration = 9.8;
-  float coeff = 0.95;
+  float coeff = 0.9;
   
   position_x = position_x + dt * velocity_x;
  
@@ -38,11 +38,11 @@ void computePhysics(float dt){
   
   if(position_x + radius > wall_x2){
     position_x = wall_x2 - radius;
-    velocity_x = -1 * velocity_x ;
+    velocity_x = -1 * coeff * velocity_x ;
   }
   if(position_x - radius < wall_x1){
     position_x = wall_x1 + radius;
-    velocity_x = -1 * velocity_x; 
+    velocity_x = -1 * coeff * velocity_x; 
   }
 }
 
