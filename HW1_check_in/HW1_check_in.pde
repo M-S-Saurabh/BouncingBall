@@ -4,14 +4,22 @@ String projectTitle = "Bouncing Ball";
 
 float position_x = 500;
 float position_y = 200;
-float velocity_x = 10;
+float velocity_x = 25;
 float velocity_y = 0;
 float radius = 40; 
 float floor = 750;
 
+float wall_x1, wall_x2;
+float wall_y1, wall_y2;
+float wall_z1, wall_z2;
+
+
 void setup(){
   size(1000, 800, P3D);
   noStroke();
+  wall_x1 = 100; wall_x2 = width-100;
+  wall_y1 = 50; wall_y2 = height-50;
+  wall_z1 = 0; wall_z2 = 600;
 }
 
 void computePhysics(float dt){
@@ -27,6 +35,15 @@ void computePhysics(float dt){
   if ( position_y_nxt + radius > floor){
     position_y = floor - radius;
     velocity_y = -1 * coeff * velocity_y; 
+  }
+  
+  if(position_x + radius > wall_x2){
+    position_x = wall_x2 - radius;
+    velocity_x = -1 * velocity_x ;
+  }
+  if(position_x - radius < wall_x1){
+    position_x = wall_x1 + radius;
+    velocity_x = -1 * velocity_x; 
   }
 }
 
@@ -83,8 +100,14 @@ void drawLight(){
   pushMatrix();
   pointLight(255,255,255, width/2, 60, -300);
   translate(width/2, 60, -300);
+  // draw a small sphere indicating light source.
   fill(255,255,0);
   sphere(5);
+  // write the text "light"
+  textMode(SHAPE);
+  textSize(32);
+  fill(0);
+  text("light",0,35);
   popMatrix();
 }
 
